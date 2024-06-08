@@ -5,12 +5,13 @@
 Crear un servidor con Node que sirva una interfaz HTML, cuya temática está basada en el registroe gastos entre roommates.
 
 Servir una API REST que permite hacer lo siguiente:
-● Almacenar roommates nuevos ocupando random user.
-● Devolver todos los roommates almacenados.
-● Registrar nuevos gastos.
-● Devolver el historial de gastos registrados.
-● Modificar la información correspondiente a un gasto.
-● Eliminar gasto del historial.
+
+- Almacenar roommates nuevos ocupando random user.
+- Devolver todos los roommates almacenados.
+- Devolver el historial de gastos registrados.
+- Modificar la información correspondiente a un gasto.
+- Eliminar gasto del historial.
+- Enviar un correo electrónico a todos los roommates cuando se registre un nuevo gasto. Se recomienda agregar a la lista de correos su correo personal para verificar esta funcionalidad.
 
 ## Prerrequisitos o Dependencias
 - Windows, Mac, Linux.
@@ -20,7 +21,7 @@ Servir una API REST que permite hacer lo siguiente:
 
 ### Para inicializar el programa se requiere:
 
-1. Instalar las dependencias Express, Axios y Uuid e instalarlas con el comando `npm i express axios uuid`.
+1. Instalar las dependencias Express, Axios, Uuid, Dotenv y Nodemailer,  e instalarlas con el comando `npm i express axios uuid dotenv nodemailer`.
 
 ### Ejemplos de uso:
 
@@ -36,7 +37,7 @@ URL: http://localhost:3000/
 ![Imagen](/assets/img/agregar_gasto.png)
 
 
-- Editar Gasto; click en icono amarillo, en Historial, ingresar actualización de datos y click en boton `Agregar`:
+- Editar Gasto; click icono amarillo en Historial, ingresar actualización de datos y click en boton `Agregar`:
 
 ![Imagen](/assets/img/editar_gasto.png)
 ![Imagen](/assets/img/editar_gasto2.png)

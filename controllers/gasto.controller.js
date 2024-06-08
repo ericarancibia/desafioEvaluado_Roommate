@@ -1,4 +1,6 @@
 import { modelGasto } from "../models/gasto.model.js"
+import { getRoommatesQuery } from "../models/roommate.model.js";
+import { sendEmail } from "../config/emailConfig.js";
 
 const getGastos = async (req, res) => {
     try {
@@ -9,22 +11,31 @@ const getGastos = async (req, res) => {
         return res.status(500).json({ ok: false, msg: "Error de servidor" })
     }
 };
+
 const addGasto = async (req, res) => {
     try {
-        const { roommate, descripcion, monto } = req.body
-
-        if (!roommate || !descripcion || !monto)
-            return res.status(400).json({ ok: false, msg: "Todos los campos obligatorios" })
-
-        const newGasto = await modelGasto.addGastoQuery(roommate, descripcion, monto)
-        await modelGasto.splitGastoQuery()
-        await modelGasto.netBalanceQuery()
-        return res.status(201).json(newGasto)
+      const { roommate, descripcion, monto } = req.body
+  
+      if (!roommate || !descripcion || !monto)
+        return res.status(400).json({ ok: false, msg: "Todos los campos obligatorios" })
+  
+      const newGasto = await modelGasto.addGastoQuery(roommate, descripcion, monto)
+      await modelGasto.splitGastoQuery()
+      await modelGasto.netBalanceQuery()
+  
+      const roommates = await getRoommatesQuery()
+      const asuntoCorreo = `Nuevo gasto agregado: ${descripcion}`
+      const cuerpoCorreo = `Se ha agregado un nuevo gasto.`
+  
+      roommates.forEach((roommate) => {
+        sendEmail(roommate.email, asuntoCorreo, cuerpoCorreo)
+      })
+      return res.status(201).json(newGasto)
     } catch (error) {
-        console.error("Error al procesar los archivos:", error)
-        return res.status(500).json({ ok: false, msg: "Error de servidor" })
+      console.error("Error al procesar los archivos:", error)
+      return res.status(500).json({ ok: false, msg: "Error de servidor" })
     }
-}
+  }
 
 const deleteGasto = async (req, res) => {
     try {
@@ -60,4 +71,3 @@ export const controllerGasto = {
     deleteGasto,
     updateGasto
 }
-

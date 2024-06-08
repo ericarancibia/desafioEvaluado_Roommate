@@ -1,5 +1,8 @@
 import { Router } from "express"
 import { controllerGasto } from "../controllers/gasto.controller.js"
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 const router = Router()
 

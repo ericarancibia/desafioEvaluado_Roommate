@@ -1,18 +1,19 @@
-import { modelRoommate } from "../models/roommate.model.js"
+import { addRoommateQuery, getRoommatesQuery } from "../models/roommate.model.js"
 
-const getRoommates = async (req, res) => {
+
+export const getRoommates = async (req, res) => {
     try {
-        const roommates = await modelRoommate.getRoommatesQuery()
-        return res.status(200).json({ roommates })
+        const roommates = await getRoommatesQuery();
+        return res.status(200).json({ roommates });
     } catch (error) {
-        console.error("Error al procesar los archivos:", error)
-        return res.status(500).json({ ok: false, msg: "Error de servidor" })
+        console.error("Error al procesar los archivos:", error);
+        return res.status(500).json({ ok: false, msg: "Error de servidor" });
     }
 }
 
-const addRoommate = async (req, res) => {
+export const addRoommate = async (req, res) => {
     try {
-        const roommate = await modelRoommate.addRoommateQuery()
+        const roommate = await addRoommateQuery()
         return res.status(201).json(roommate)
     } catch (error) {
         console.error("Error al procesar los archivos:", error)
@@ -20,7 +21,3 @@ const addRoommate = async (req, res) => {
     }
 }
 
-export const controllerRoommate = {
-    getRoommates,
-    addRoommate
-}

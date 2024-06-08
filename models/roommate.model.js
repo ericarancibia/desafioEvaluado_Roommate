@@ -9,13 +9,14 @@ const filePathRoommates = path.join(_dirname, "../data/roommates.json")
 
 const urlApi = "https://randomuser.me/api"
 
-const addRoommateQuery = async (req, res) => {
+export const addRoommateQuery = async (req, res) => {
     try {
         const data = await axios.get(urlApi)
         const userData = data.data.results[0]
         const usuario = {
             id: uuidv4().slice(0, 5),
             nombre: `${userData.name.first} ${userData.name.last}`,
+            email: `${userData.email}`,
             debe: 0,
             recibe: 0
         }
@@ -31,7 +32,7 @@ const addRoommateQuery = async (req, res) => {
     }
 }
 
-const getRoommatesQuery = async () => {
+export const getRoommatesQuery = async () => {
     try {
         const preview = await readFile(filePathRoommates, "utf8")
         const roommates = preview.trim() ? JSON.parse(preview) : []
@@ -41,7 +42,3 @@ const getRoommatesQuery = async () => {
     }
 }
 
-export const modelRoommate = {
-    addRoommateQuery,
-    getRoommatesQuery
-}
